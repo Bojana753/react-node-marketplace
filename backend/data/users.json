@@ -48,7 +48,12 @@
     "email": "kraljnem@yahoo.com",
     "telefon": "222222222",
     "lozinka": "$2b$10$hAN848FSrRW/h7bqsBkjs.MJ0hM9NFoBLLnGPenkjK0UUVK2ZpGDy",
-    "uloga": "prodavac"
+    "uloga": "prodavac",
+    "proizvodiNaProdaju": [
+      "3c929b15-9f1a-4d72-b4aa-cb32a08acb66",
+      "fe55ae12-d0cd-4bec-8c55-eb1842bee9f4"
+    ],
+    "kupljeniProizvodi": []
   },
   {
     "id": "1758282466938",
@@ -58,6 +63,10 @@
     "email": "dare@yahoo.com",
     "telefon": "4444444",
     "lozinka": "$2b$10$Z/xsJRyjiYsxY3u1py.ScuNeHbv765GccIgl9ZVEUPxi1JcaOAJz.",
-    "uloga": "kupac"
+    "uloga": "kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": [
+      "280cf040-dcb5-4a8c-9073-a483587eda48"
+    ]
   }
 ]

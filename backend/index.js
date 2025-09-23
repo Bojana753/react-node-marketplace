@@ -4,7 +4,7 @@ import fs from "fs";
 
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
-import authRoutes from "./routes/userRoutes.js"; 
+import userRoutes from "./routes/userRoutes.js"; 
 
 //Kreira 'app' instancu ODMAH nakon importova
 const app = express();
@@ -22,7 +22,7 @@ app.use(express.json());
 //Povezivanje svih rutere sa njihovim osnovnim putanjama
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/auth", authRoutes); 
+app.use("/api/users", userRoutes); 
 
 //Inicijalizaciona logika (ako je neophodna ovde)
 const CATEGORIES_FILE = "./data/categories.json";

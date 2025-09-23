@@ -20,6 +20,8 @@ export const register = async (userData) => {
     lozinka: hashedPassword,
    // uloga: 'Kupac', // Default uloga
     // ostala polja
+    proizvodiNaProdaju: [],
+    kupljeniProizvodi: []
   };
   
   return userRepository.save(newUser);

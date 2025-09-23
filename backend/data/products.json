@@ -111,7 +111,16 @@
     },
     "image": "https://plus.unsplash.com/premium_photo-1708274140680-11c9e42dcac9?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFsZSUyMGZhc2hpb24lMjBtb2RlbHxlbnwwfHwwfHx8MA%3D%3D",
     "prodavacId": "1758225075304",
-    "status": "Active"
+    "status": "Processing",
+    "ponude": [
+      {
+        "cena": 2500,
+        "kupacId": "1758282466938",
+        "datum": "2025-09-23T20:39:41.845Z"
+      }
+    ],
+    "kupacId": "1758282466938",
+    "finalnaCena": 2500
   },
   {
     "id": "7e9ea283-6af1-4853-a91c-78f5037e3f0c",

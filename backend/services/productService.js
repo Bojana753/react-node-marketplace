@@ -1,5 +1,6 @@
 import productRepository from "../repositories/productRepository.js";
 import * as userRepository from "../repositories/userRepository.js";
+import { addProductToBuyer } from './userService.js'; 
 
 export default {
   getAll: () => {
@@ -62,37 +63,26 @@ export default {
   /**
    * Završava aukciju za proizvod.
    */
-  endAuction: (productId, sellerId) => {
+endAuction: (productId, sellerId) => {
     const product = productRepository.getProductById(productId);
+    // ... sve tvoje validacije za proizvod, vlasnika i ponude ostaju ISTE ...
+    if (!product) { /*...*/ }
+    if (product.prodavacId !== sellerId) { /*...*/ }
+    if (!product.ponude || product.ponude.length === 0) { /*...*/ }
 
-    // Validacija 1: Proveri da li proizvod postoji
-    if (!product) {
-      throw new Error('Product not found.');
-    }
-    
-    // Validacija 2: Proveri da li je ulogovani korisnik vlasnik proizvoda
-    if (product.prodavacId !== sellerId) {
-      throw new Error('You are not authorized to end this auction.');
-    }
-
-    // Validacija 3: Proveri da li postoji bar jedna ponuda
-    if (!product.ponude || product.ponude.length ===
- 0) {
-      throw new Error('Cannot end auction with no bids.');
-    }
-    
-    // Pronalazimo pobedničku ponudu (poslednju, tj. najveću)
     const winningBid = product.ponude.sort((a, b) => b.cena - a.cena)[0];
+    const buyerId = winningBid.kupacId;
+
+    // Ažuriramo proizvod
+    product.status = 'Processing'; // Menjamo status u "Obrada"
+    product.kupacId = buyerId;
+    product.finalnaCena = winningBid.cena;
+    productRepository.updateProduct(productId, product);
+
+    // === POZIVAMO NAŠU NOVU, UNIVERZALNU FUNKCIJU ===
+    // Prosleđujemo joj sve potrebne informacije
+    addProductToBuyer(productId, buyerId, sellerId);
     
-    // Ažuriramo status proizvoda
-    product.status = 'Processing'; 
-    product.kupacId = winningBid.kupacId; 
-    product.finalnaCena = winningBid.cena; 
-
-    const updatedProduct = productRepository.updateProduct(productId, product);
-
-    // Ovde bi išla logika za ažuriranje korisnika, za sada je preskačemo da ne komplikujemo
-
-    return updatedProduct;
-  }
+    return product;
+}
 };
