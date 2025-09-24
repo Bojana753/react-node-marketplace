@@ -1,8 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route , Navigate} from "react-router-dom";
 
 import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductTabs from "./pages/ProductTabs";
 import ProductForm from "./pages/ProductForm";  // 👈 dodaj import
@@ -11,7 +10,6 @@ import MyProducts from "./pages/MyProducts";
 import ProductDetails from "./pages/ProductDetails";
 import CartSeller from "./pages/CartsSeller";
 import LoginPage from './pages/LoginPage'; 
-import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 
 function App() {
