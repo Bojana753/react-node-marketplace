@@ -10,6 +10,9 @@ import Profile from "./pages/Profile";
 import MyProducts from "./pages/MyProducts";
 import ProductDetails from "./pages/ProductDetails";
 import CartSeller from "./pages/CartsSeller";
+import LoginPage from './pages/LoginPage'; 
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -25,12 +28,13 @@ function App() {
 
 
         <Route path="/carts" element={<CartSeller />} />
-        {/* <Route path="/products/:id" element={<ProductDetails />} /> */}
 
 
         {/* 👇 dodaj forme za dodavanje i editovanje proizvoda */}
         <Route path="/add" element={<ProductForm />} />
         <Route path="/edit/:id" element={<ProductForm />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,26 @@
+.profile-page {
+  padding-top: 120px; /* Da ne bude ispod navbara */
+  padding-bottom: 40px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+}
+
+.profile-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.profile-card h2 {
+  margin-top: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.products-section h2 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}

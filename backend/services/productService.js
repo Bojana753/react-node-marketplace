@@ -1,5 +1,6 @@
 import productRepository from "../repositories/productRepository.js";
 import * as userRepository from "../repositories/userRepository.js";
+import { addProductToBuyer } from './userService.js'; 
 
 export default {
   getAll: () => {
@@ -54,8 +55,15 @@ export default {
     return productRepository.updateProduct(productId, product);
   },
 
-  endAuction: (productId, sellerId) => {
+  /**
+   * Završava aukciju za proizvod.
+   */
+endAuction: (productId, sellerId) => {
     const product = productRepository.getProductById(productId);
+    // ... sve tvoje validacije za proizvod, vlasnika i ponude ostaju ISTE ...
+    if (!product) { /*...*/ }
+    if (product.prodavacId !== sellerId) { /*...*/ }
+    if (!product.ponude || product.ponude.length === 0) { /*...*/ }
 
     if (!product) {
       throw new Error("Product not found.");
@@ -135,7 +143,6 @@ cancelPurchase: (productId, userId) => {
 
   return product;
 },
-
 
 
 };

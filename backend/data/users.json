@@ -59,6 +59,11 @@
     "telefon": "222222222",
     "lozinka": "$2b$10$hAN848FSrRW/h7bqsBkjs.MJ0hM9NFoBLLnGPenkjK0UUVK2ZpGDy",
     "uloga": "Prodavac"
+    "proizvodiNaProdaju": [
+      "3c929b15-9f1a-4d72-b4aa-cb32a08acb66",
+      "fe55ae12-d0cd-4bec-8c55-eb1842bee9f4"
+    ],
+    "kupljeniProizvodi": []
   },
   {
     "id": "1758282466938",
@@ -68,6 +73,7 @@
     "email": "dare@yahoo.com",
     "telefon": "4444444",
     "lozinka": "$2b$10$Z/xsJRyjiYsxY3u1py.ScuNeHbv765GccIgl9ZVEUPxi1JcaOAJz.",
+<<<<<<< HEAD
     "uloga": "Kupac"
   },
   {
@@ -89,5 +95,12 @@
     "telefon": "57565756",
     "lozinka": "$2b$10$htOk9bzGQJzLXobSbqpzs.Cn1J/.2b5BW2XknFDYhJHYz/v81Q1Mu",
     "uloga": "kupac"
+=======
+    "uloga": "kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": [
+      "280cf040-dcb5-4a8c-9073-a483587eda48"
+    ]
+>>>>>>> 5e52f07a792c27ecdfe412b360b19375668bec88
   }
 ]

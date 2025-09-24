@@ -25,6 +25,8 @@ export const register = async (userData) => {
     lozinka: hashedPassword,
     // Ako želiš default:
     // uloga: 'Kupac',
+    proizvodiNaProdaju: [],
+    kupljeniProizvodi: []
   };
 
   return userRepository.save(newUser);
