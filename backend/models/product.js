@@ -5,13 +5,13 @@ export default class Product {
     description,
     categoryId,
     price,
-    salesType, // "fixedPrice" | "auction"
+    salesType,
     dateOfCreation,
     prodavacId,
     ponude = [],
     reviewByBuyer = false,
     reviewBySeller = false,
-    status = "Obrada", // "Obrada" | "Prodato" | "Odbijeno" | "Otkazano"
+    status = "Processing", 
     location = "",
     isDeleted = false,
     image = null
@@ -19,14 +19,14 @@ export default class Product {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.categoryId = categoryId; // može biti id ili objekat kategorije
+    this.categoryId = categoryId; 
     this.price = price;
     this.salesType = salesType;
     this.dateOfCreation = dateOfCreation;
     this.prodavacId = prodavacId;
-    this.ponude = ponude; // niz ponuda za aukciju
-    this.reviewByBuyer = reviewByBuyer; // boolean
-    this.reviewBySeller = reviewBySeller; // boolean
+    this.ponude = ponude;
+    this.reviewByBuyer = reviewByBuyer; 
+    this.reviewBySeller = reviewBySeller; 
     this.status = status;
     this.location = location;
     this.isDeleted = isDeleted;

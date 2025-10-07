@@ -25,7 +25,7 @@ export default function RegisterPage() {
     setError('');
 
     if (formData.lozinka !== formData.potvrdaLozinke) {
-      setError('Lozinke se ne poklapaju.');
+      setError('Passwords do not match.');
       return;
     }
 

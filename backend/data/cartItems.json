@@ -23,18 +23,7 @@
     "quantity": 1,
     "status": "IN_PROGRESS"
   },
-  {
-    "id": "0fcf47ff-0891-45c5-ab30-630274e221fc",
-    "productId": "cd58b2d6-706e-4d1e-a6ce-1e10de94bc82",
-    "quantity": 1,
-    "status": "IN_PROGRESS"
-  },
-  {
-    "id": "660e2ff3-8c31-4489-b4f4-277b2fd919af",
-    "productId": "cd58b2d6-706e-4d1e-a6ce-1e10de94bc82",
-    "quantity": 1,
-    "status": "IN_PROGRESS"
-  },
+  
   {
     "id": "d087793b-e02c-463e-ad16-cfdd107680ee",
     "productId": "1759218079785",
@@ -56,18 +45,6 @@
   {
     "id": "ecdc33e0-161e-4e9e-9160-febb996e881e",
     "productId": "1759418890442",
-    "quantity": 1,
-    "status": "IN_PROGRESS"
-  },
-  {
-    "id": "9750cdc6-c3e7-4457-9eb1-5b94f4aeeb80",
-    "productId": "61859649-b686-42e0-b71b-aab922160bb4",
-    "quantity": 1,
-    "status": "approved"
-  },
-  {
-    "id": "5e4fbfdd-1694-446b-b8a2-dbcdf84b29b5",
-    "productId": "1759434497692",
     "quantity": 1,
     "status": "IN_PROGRESS"
   },
@@ -121,6 +98,12 @@
   {
     "id": "c1af1aaf-c71a-4d67-87af-c6bac464ea0d",
     "productId": "1759775838008",
+    "quantity": 1,
+    "status": "approved"
+  },
+  {
+    "id": "df004b4e-86d1-49b4-9a5e-80e697852d98",
+    "productId": "1759802733835",
     "quantity": 1,
     "status": "approved"
   }

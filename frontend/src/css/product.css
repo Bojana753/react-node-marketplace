@@ -44,6 +44,25 @@
   transition: all 0.3s ease;
 }
 
+.cart-icon-btn {
+  background-color: #890493; 
+  color: white;
+  border: none;
+  border-radius: 50%; 
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cart-icon-btn:hover {
+  background-color: #8c048f; 
+}
+
+
 .add-btn:hover {
   background: black;
   color: white;

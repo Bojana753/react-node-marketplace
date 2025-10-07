@@ -8,14 +8,26 @@ export const createReport = (reportData, reporterId) => {
     const { razlog, productId } = reportData;
 
     if (!razlog || razlog.trim() === '') {
-        throw new Error("Razlog prijave je obavezan.");
+        throw new Error("The reason for registration is required.");
     }
+
     const product = productRepository.default.getProductById(productId);
     if (!product) {
-        throw new Error("Proizvod nije pronađen.");
+        throw new Error("Product not found.");
     }
-    if (String(product.kupacId) !== String(reporterId)) {
-        throw new Error("Možete prijaviti samo prodavca od kojeg ste kupili proizvod.");
+    
+    const isBuyer = String(product.kupacId) === String(reporterId);
+    const isSeller = String(product.prodavacId) === String(reporterId);
+    
+    if (!isBuyer && !isSeller) {
+        throw new Error('You cannot report a transaction in which you did not participate.');
+    }
+
+    let reportedUserId;
+    if (isBuyer) {
+        reportedUserId = product.prodavacId;
+    } else {
+        reportedUserId = product.kupacId;
     }
     
     const newReport = new Report(
@@ -23,9 +35,9 @@ export const createReport = (reportData, reporterId) => {
         razlog,
         productId,
         reporterId,
-        product.prodavacId, 
+        reportedUserId, 
         new Date().toISOString(),
-        "Podneta" 
+        "Filed" 
     );
 
     return reportRepository.save(newReport);
@@ -46,8 +58,8 @@ export const getAllReports = () => {
 
         return {
             ...report, 
-            reporterUsername: reporter ? reporter.korisnickoIme : 'Nepoznat Korisnik',
-            reportedUsername: reported ? reported.korisnickoIme : 'Nepoznat Korisnik'
+            reporterUsername: reporter ? reporter.korisnickoIme : 'Unknown User',
+            reportedUsername: reported ? reported.korisnickoIme : 'Unknown User'
         };
     });
 
@@ -57,10 +69,10 @@ export const getAllReports = () => {
 export const acceptReport = (reportId) => {
     const report = reportRepository.findById(reportId); 
     if (!report) {
-        throw new Error("Prijava nije pronađena.");
+        throw new Error("Login not found.");
     }
-    if (report.status !== 'Podneta') {
-        throw new Error("Ova prijava je već obrađena.");
+    if (report.status !== 'Filed') {
+        throw new Error("This application has already been processed.");
     }
 
     const userToBlock = userRepository.findById(report.reportedId);
@@ -78,20 +90,20 @@ export const acceptReport = (reportId) => {
     });
     productRepository.default.saveProducts(updatedProducts); 
 
-    report.status = 'Prihvaćena';
+    report.status = 'Accepted';
     return reportRepository.save(report);
 };
 
 export const rejectReport = (reportId, reason) => {
     const report = reportRepository.findById(reportId); 
     if (!report) {
-        throw new Error("Prijava nije pronađena.");
+        throw new Error("Login not found.");
     }
-    if (report.status !== 'Podneta') {
-        throw new Error("Ova prijava je već obrađena.");
+    if (report.status !== 'Filed') {
+        throw new Error("This application has already been processed.");
     }
     
-    report.status = 'Odbijena';
+    report.status = 'Rejected';
     report.rejectionReason = reason; 
     return reportRepository.save(report);
 };

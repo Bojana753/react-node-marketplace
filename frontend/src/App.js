@@ -14,6 +14,8 @@ import PublicProfilePage from './pages/PublicProfilePage';
 import MyPurchases from './pages/MyPurchases';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminRoute from './AdminRoute'; 
+import MySales from './pages/MySales';
+
 
 function App() {
   return (
@@ -25,7 +27,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/products" element={<ProductTabs />} />
-        {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/my-products" element={<MyProducts />} />  
         <Route path="/products/:id" element={<ProductDetails />} />
         <Route path="/carts" element={<CartSeller />} />
@@ -34,6 +35,8 @@ function App() {
          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/:userId" element={<PublicProfilePage />} />
           <Route path="/my-purchases" element={<MyPurchases />} />
+          <Route path="/my-sales" element={<MySales />} />
+
        <Route 
             path="/admin" 
             element={

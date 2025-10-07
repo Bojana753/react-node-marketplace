@@ -119,8 +119,8 @@
     "isDeleted": false,
     "image": "https://uk.claudiepierlot.com/dw/image/v2/BCND_PRD/on/demandware.static/-/Sites-claudie-master-catalog/default/dwed5f9996/images/hi-res/Claudie_CFPVE00499-A017_F_1.jpg?sw=1255&sh=1840",
     "prodavacId": "1759415125298",
-    "status": "Sold",
-    "kupacId": "1758282466938",
+    "status": "Active",
+    "kupacId": "1758674485205",
     "location": {
       "street": "Cara Dušana",
       "number": "10",
@@ -193,7 +193,7 @@
     "isDeleted": false,
     "image": "https://images.squarespace-cdn.com/content/v1/6204821bfe06b76898b431c5/cd3b25b0-24c9-4e3c-9de7-f1f034c35504/EE7A6231.jpg",
     "prodavacId": "1759415125298",
-    "status": "Active"
+    "status": "Sold"
   },
   {
     "id": "c93cea78-af8b-47e1-9aff-27c7c051d6a3",
@@ -236,8 +236,7 @@
     "isDeleted": false,
     "image": "https://cdn.prod.website-files.com/611cda85065cd630ff59f7ff/642e18c5e42d31284b54992e_GyMVKyIVYAGrxoiaL_qz1uB-L7HaUVweRuPfL1AOs4MPn_GWyWRLg7-axFhgJVaSxIoa0hCTu4LhfQeQutKrnRcDSwpgtiW3X2Ywc-wpLCwsDvB56_oNWiarfvjzuzVOFnCZf2hRUayGuYiD1KTaAw.png",
     "prodavacId": "1759415125298",
-    "status": "Processing",
-    "kupacId": "1758674485205"
+    "status": "Active"
   },
   {
     "name": "Classic Trench Coat",
@@ -338,7 +337,7 @@
     "image": "https://dms.deckers.com/ugg/image/upload/t_pdp-slider-large-wp/v1729721441/1130395T-CHE_1.png?_s=RAABAB0",
     "salesType": "fixedPrice",
     "prodavacId": "1759415125298",
-    "status": "Active",
+    "status": "Sold",
     "id": "1759418890442"
   },
   {
@@ -438,7 +437,8 @@
     "reviewByBuyer": false,
     "reviewBySeller": false,
     "ponude": [],
-    "dateOfCreation": "2025-10-02T22:46:30.899Z"
+    "dateOfCreation": "2025-10-02T22:46:30.899Z",
+    "kupacId": "1758674485205"
   },
   {
     "name": "Sloane Fluted 2 Seat Sofa",
@@ -455,7 +455,7 @@
       "latitude": "",
       "longitude": ""
     },
-    "status": "Processing",
+    "status": "Active",
     "reviewByBuyer": false,
     "reviewBySeller": false,
     "ponude": [],
@@ -531,7 +531,7 @@
     "dateOfCreation": "2025-10-02T23:49:07.065Z",
     "prodavacId": "1758660875117",
     "id": "1759448947077",
-    "kupacId": "1758674485205"
+    "kupacId": "1759418946844"
   },
   {
     "name": "probni",
@@ -851,5 +851,29 @@
     "prodavacId": "1758225075304",
     "id": "1759775838008",
     "kupacId": "1759754539826"
+  },
+  {
+    "name": "Modern Cozy Jacket",
+    "description": "Stay warm and stylish with this modern jacket — a perfect blend of comfort, quality, and design. Crafted from durable materials with a soft inner lining, it provides excellent protection against chilly weather while keeping a sleek, fashionable look. Ideal for both casual and semi-formal outfits, this jacket is a versatile piece you’ll reach for season after season.\n",
+    "price": "157565",
+    "image": "https://images.napali.app/global/billabong-products/all/default/xlarge/m3wa01biw8_billabong,sg_1931_frt1.jpg",
+    "salesType": "fixedPrice",
+    "categoryId": "2",
+    "location": {
+      "street": "Dunavske divizije",
+      "number": "5",
+      "city": "Petrovaradin",
+      "postalCode": "21131",
+      "latitude": "45.2490540",
+      "longitude": "19.8737195"
+    },
+    "status": "Sold",
+    "reviewByBuyer": false,
+    "reviewBySeller": false,
+    "ponude": [],
+    "dateOfCreation": "2025-10-07T03:05:31.555Z",
+    "prodavacId": "1758660875117",
+    "id": "1759802733835",
+    "kupacId": "1758674485205"
   }
 ]

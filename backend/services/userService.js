@@ -6,7 +6,7 @@ import * as reviewRepository from '../repositories/reviewRepository.js';
 export const getUserProfile = (userId) => {
     const user = userRepository.findById(userId);
     if (!user) {
-        throw new Error('Korisnik nije pronađen.');
+        throw new Error('User not found.');
     }
     const { lozinka, ...userProfile } = user;
 
@@ -19,7 +19,7 @@ export const addProductToBuyer = (productId, buyerId, sellerId) => {
     const seller = userRepository.findById(sellerId);
 
     if (!buyer || !seller) {
-        throw new Error('Kupac ili Prodavac nisu pronađeni.');
+        throw new Error('No buyer or seller found.');
     }
 
     if (!buyer.kupljeniProizvodi) {
@@ -37,17 +37,17 @@ export const addProductToBuyer = (productId, buyerId, sellerId) => {
     userRepository.save(buyer);
     userRepository.save(seller);
 
-    console.log(`Proizvod ${productId} je prebačen sa prodavca ${sellerId} na kupca ${buyerId}`);
+    console.log(`Product ${productId} has been transferred from seller ${sellerId} to customer${buyerId}`);
     return { success: true };
 };
 
 export const updateBasicProfile = (userId, basicData) => {
     const user = userRepository.findById(userId);
     if (!user) {
-        throw new Error('Korisnik nije pronađen.');
+        throw new Error('User not found.');
     }
 
-    const allowedFields = ['ime', 'prezime', 'telefon', 'datumRodjenja', 'opis', 'profilnaSlika'];
+    const allowedFields = ['name', 'surname', 'phone', 'date of birth', 'description', 'profile picture'];
     const dataToUpdate = {};
     for (const key of Object.keys(basicData)) {
         if (allowedFields.includes(key)) {
@@ -106,33 +106,36 @@ export const updateSensitiveProfile = async (userId, sensitiveData) => {
     const { lozinka, ...userProfileWithoutPassword } = updatedUser;
     return userProfileWithoutPassword;
 };
-export const getPublicProfile = (userId) => {
-    const user = userRepository.findById(userId);
+
+
+export const getPublicProfile = (profileUserId, viewerId) => {
+    const user = userRepository.findById(profileUserId);
     if (!user) {
         throw new Error('User not found.');
     }
-
+    
     const { lozinka, ...userProfile } = user;
 
     const allProducts = productRepository.getAllProducts();
     if (user.uloga === 'Prodavac') {
         userProfile.proizvodiNaProdaju = allProducts.filter(p => 
-            String(p.prodavacId) === String(userId) && p.status === 'Active'
+            String(p.prodavacId) === String(profileUserId) && p.status === 'Active'
         );
     } else if (user.uloga === 'Kupac') {
-        if (user.kupljeniProizvodi && Array.isArray(user.kupljeniProizvodi)) {
-            userProfile.kupljeniProizvodi = allProducts.filter(p =>
-                user.kupljeniProizvodi.includes(p.id) && p.status === 'Sold'
-            );
-        } else {
-            userProfile.kupljeniProizvodi = [];
-        }
+        userProfile.kupljeniProizvodi = allProducts.filter(p =>
+            String(p.kupacId) === String(profileUserId) && p.status === 'Sold'
+        );
     }
-    userProfile.recenzije = [];
-    userProfile.prosjecnaOcjena = 0;
-    const allReviews = reviewRepository.findAll(); 
-    const receivedReviews = allReviews.filter(r => String(r.receiverId) === String(userId));
 
+    const allReviews = reviewRepository.findAll();
+    let receivedReviews = allReviews.filter(r => String(r.receiverId) === String(profileUserId));
+
+    if (profileUserId === viewerId && user.uloga === 'Prodavac') {
+        const givenReviews = allReviews.filter(r => String(r.authorId) === String(profileUserId));
+        const reviewedBuyerIds = new Set(givenReviews.map(r => r.receiverId));
+        receivedReviews = receivedReviews.filter(r => reviewedBuyerIds.has(String(r.authorId)));
+    }
+    
     const populatedReviews = receivedReviews.map(review => {
         const author = userRepository.findById(review.authorId);
         return {

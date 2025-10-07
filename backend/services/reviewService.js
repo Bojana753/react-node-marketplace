@@ -7,21 +7,32 @@ import Review from '../models/review.js';
 export const createReview = (reviewData, authorId) => {
     const { ocjena, komentar, productId, receiverId } = reviewData;
 
+    
     const product = productRepository.default.getProductById(productId);
     if (!product) {
-        throw new Error("Proizvod nije pronađen.");
+        throw new Error("Product not found.");
     }
     if (product.status !== 'Sold') {
-        throw new Error("Možete ocijeniti samo kupovine koje su završene (status 'Sold').");
+        throw new Error("It is possible to leave a review only for sold products.");
     }
-    if (String(product.kupacId) !== String(authorId)) {
-        throw new Error("Ne možete ocijeniti proizvod koji niste kupili.");
+
+    const isBuyer = String(product.kupacId) === String(authorId);
+    const isSeller = String(product.prodavacId) === String(authorId);
+
+    if (!isBuyer && !isSeller) {
+        throw new Error('You cannot rate a transaction in which you did not participate.');
     }
-    if (String(product.prodavacId) !== String(receiverId)) {
-        throw new Error("Pokušavate ocijeniti pogrešnog prodavca.");
+
+    if (isBuyer && String(product.prodavacId) !== String(receiverId)) {
+        throw new Error('As a customer, you can only rate the seller of this product.');
     }
-    if (reviewRepository.findByProductIdAndAuthorId(productId, authorId)) {
-        throw new Error("Već ste ocijenili ovu kupovinu.");
+    if (isSeller && String(product.kupacId) !== String(receiverId)) {
+        throw new Error('As a seller, you can only rate the buyer of this product.');
+    }
+
+     const existingReview = reviewRepository.findByProductIdAndAuthorId(productId, authorId);
+    if (existingReview) {
+        throw new Error("You have already rated this transaction.");
     }
 
     const newReview = new Review(
@@ -35,8 +46,8 @@ export const createReview = (reviewData, authorId) => {
     );
 
     return reviewRepository.save(newReview);
- 
 };
+
 export const getAllReviews = () => {
     const reviews = reviewRepository.findAll();
     const users = userRepository.findAll();
@@ -52,8 +63,8 @@ export const getAllReviews = () => {
 
         return {
             ...review,
-            authorUsername: author ? author.korisnickoIme : 'Nepoznat',
-            receiverUsername: receiver ? receiver.korisnickoIme : 'Nepoznat'
+            authorUsername: author ? author.korisnickoIme : 'Unknown',
+            receiverUsername: receiver ? receiver.korisnickoIme : 'Unknown'
         };
     });
 
@@ -61,18 +72,18 @@ export const getAllReviews = () => {
 };
 
 export const updateReview = (reviewId, newComment) => {
-    const review = reviewRepository.findById(reviewId); 
+    const review = reviewRepository.findById(reviewId);
     if (!review) {
-        throw new Error("Recenzija nije pronađena.");
+        throw new Error("No review found.");
     }
     review.komentar = newComment;
     return reviewRepository.save(review);
 };
 
 export const deleteReview = (reviewId) => {
-    const success = reviewRepository.deleteById(reviewId); 
+    const success = reviewRepository.deleteById(reviewId);
     if (!success) {
-        throw new Error("Recenzija nije pronađena za brisanje.");
+        throw new Error("No review found for deletion.");
     }
-    return { message: "Recenzija uspješno obrisana." };
+    return { message: "Review successfully deleted." };
 };

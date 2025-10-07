@@ -6,6 +6,6 @@ export default class Report {
         this.reporterId = reporterId; 
         this.reportedId = reportedId; 
         this.datum = datum;
-        this.status = status; // "Podneta", "Odbijena", "Prihvaćena"
+        this.status = status; 
     }
 }

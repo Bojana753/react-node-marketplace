@@ -106,8 +106,11 @@
     "korisnickoIme": "prodavac",
     "email": "prodavac@gmail.com",
     "telefon": "57565657675",
-    "lozinka": "$2b$10$XVoF7F9tlCWi/tF75Ih9JOkx/ZNaB5bPA/5v8O5DB8c4ZU0TP77I2",
-    "uloga": "Prodavac"
+    "lozinka": "$2b$10$VgfLNMFkMukofl9rWeL4aeuUIlfnLGwmZSw2VtymaGqLp2G2VCylC",
+    "uloga": "Prodavac",
+    "datumRodjenja": "",
+    "opis": "",
+    "profilnaSlika": "https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=612x612&w=0&k=20&c=tyLvtzutRh22j9GqSGI33Z4HpIwv9vL_MZw_xOE19NQ="
   },
   {
     "id": "1758674485205",
@@ -222,5 +225,41 @@
     "proizvodiNaProdaju": [],
     "kupljeniProizvodi": [],
     "blokiran": true
+  },
+  {
+    "id": "1759805871454",
+    "ime": "kupac1234",
+    "prezime": "kupac1234",
+    "korisnickoIme": "kupac1234",
+    "email": "kupac1234@gmail.com",
+    "telefon": "5676576",
+    "lozinka": "$2b$10$1910c/2VhR2rdy7ips4ZHOJ5TSET.N.r4SYknT/GruQEnQWHtUQWa",
+    "uloga": "Kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": []
+  },
+  {
+    "id": "1759810374122",
+    "ime": "prodavacabc",
+    "prezime": "prodavacabc",
+    "korisnickoIme": "prodavacabc",
+    "email": "prodavacabc@gmail.com",
+    "telefon": "6768678",
+    "lozinka": "$2b$10$j6oWS//QyTKK1UJUAz3iVediPCsZFAu2nkHmmfmAl9vF/st7cogEe",
+    "uloga": "Prodavac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": []
+  },
+  {
+    "id": "1759813224295",
+    "ime": "jakna",
+    "prezime": "jakna",
+    "korisnickoIme": "jakna",
+    "email": "jakna@gmail.com",
+    "telefon": "jakna",
+    "lozinka": "$2b$10$l6daUlGfR5Oi.0hHd9EIxuV7jXkqW6xY9wgj3zvjBS3KFNBYunA.S",
+    "uloga": "Kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": []
   }
 ]

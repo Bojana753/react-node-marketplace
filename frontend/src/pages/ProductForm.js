@@ -30,7 +30,6 @@ export default function ProductForm() {
     ponude: [],
   });
 
-  // Provera da li je korisnik prodavac
   useEffect(() => {
     if ((!user || user.uloga !== "Prodavac") && !alerted.current) {
       alerted.current = true;
@@ -39,7 +38,6 @@ export default function ProductForm() {
     }
   }, [user, navigate]);
 
-  // Učitavanje proizvoda u slučaju editovanja
   useEffect(() => {
     async function loadProduct() {
       try {
@@ -86,7 +84,6 @@ export default function ProductForm() {
     }
   }
 
-  // Funkcija za geokodiranje adrese
   async function fetchCoordinates({ street, number, city, postalCode }) {
     const address = `${street} ${number}, ${city}, ${postalCode}`;
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
@@ -109,7 +106,6 @@ export default function ProductForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // automatski dohvata latitude i longitude pre POST-a
     const coords = await fetchCoordinates(formData.location);
     const updatedForm = {
       ...formData,

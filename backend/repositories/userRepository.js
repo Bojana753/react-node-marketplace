@@ -11,7 +11,7 @@ const readUsers = () => {
         const data = fs.readFileSync(usersFilePath, 'utf8');
         return JSON.parse(data);
     } catch (error) {
-        console.error("Greška pri čitanju users.json:", error);
+        console.error("Error reading users.json:", error);
         return [];
     }
 };
@@ -20,7 +20,7 @@ const writeUsers = (users) => {
     try {
          fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
     } catch (error) {
-        console.error("Greška pri pisanju u users.json:", error);
+        console.error("Error writing to users.json:", error);
     }
 };
 

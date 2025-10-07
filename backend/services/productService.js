@@ -1,8 +1,9 @@
 import productRepository from "../repositories/productRepository.js";
 import * as userRepository from "../repositories/userRepository.js";
-import { addProductToBuyer } from './userService.js'; 
-import CartService from "./cartService.js"; 
+import { addProductToBuyer } from './userService.js';
+import CartService from "./cartService.js";
 import CartItemService from "./cartItemService.js";
+
 const cartItemService = new CartItemService();
 const cartService = new CartService();
 
@@ -13,16 +14,16 @@ export default {
 
   getAll: () => {
     const allProducts = productRepository.getAllProducts();
-    const allUsers = userRepository.findAll(); 
+    const allUsers = userRepository.findAll();
 
     const blockedUserIds = new Set(
       allUsers.filter(u => u.blokiran === true).map(u => u.id)
     );
-    
+
     const visibleProducts = allProducts.filter(product => {
       const isHiddenStatus = product.status === 'Sold' || product.status === 'DeletedByAdmin' || product.status === 'Processing';
       const isSellerBlocked = blockedUserIds.has(String(product.prodavacId));
-      
+
       return !isHiddenStatus && !isSellerBlocked;
     });
 
@@ -34,7 +35,7 @@ export default {
   },
 
   create: (product) => {
-    return productRepository.createProduct(product); 
+    return productRepository.createProduct(product);
   },
 
   update: (id, data) => {
@@ -77,10 +78,10 @@ export default {
     return productRepository.updateProduct(productId, product);
   },
 
- endAuction: (productId, sellerId) => {
+  endAuction: (productId, sellerId) => {
     console.log({ productId, sellerId });
     const product = productRepository.getProductById(productId);
-  
+
     if (!product) {
       throw new Error("Product not found.");
     }
@@ -94,21 +95,21 @@ export default {
     const winningBid = product.ponude.sort((a, b) => b.cena - a.cena)[0];
     const buyerId = winningBid.kupacId;
 
-    product.status = 'Processing'; 
+    product.status = 'Processing';
     product.kupacId = buyerId;
     product.finalnaCena = winningBid.cena;
     productRepository.updateProduct(productId, product);
 
     addProductToBuyer(productId, buyerId, sellerId);
-     try {
+    try {
       const buyerCart = cartService.getOrCreateCart(buyerId);
 
       cartItemService.addItem(buyerCart.id, productId, 1, "IN_PROGRESS");
 
-      console.log(`✅ AUKCIJA ZAVRŠENA: Kreiran CartItem za proizvod ${productId} u košarici ${buyerCart.id} za kupca ${buyerId}`);
-      
+      console.log(`AUCTION COMPLETED: Created CartItem for product ${productId} in cart ${buyerCart.id} for buyer ${buyerId}`);
+
     } catch (error) {
-        console.error("!!! Greška prilikom kreiranja CartItem-a nakon aukcije:", error.message);
+      console.error("!!!Error creating CartItem after auction:", error.message);
     }
     return product;
   },
@@ -142,30 +143,46 @@ export default {
   },
 
   cancelPurchase: (productId, userId) => {
+    const product = productRepository.getProductById(productId);
 
-    let products = readProducts(); 
-    const index = products.findIndex((p) => String(p.id) === String(productId));
-
-    if (index === -1) {
-      throw new Error("Product not found");
+    if (!product) {
+        throw new Error("Product not found");
     }
-
-    const product = products[index];
-
-    if (product.status !== "Obrada") {
-      throw new Error("Purchase cannot be cancelled unless status is 'Obrada'");
-    }
-
     if (String(product.kupacId) !== String(userId)) {
-      throw new Error("You are not the buyer of this product");
+        throw new Error("You can only cancel your own purchases");
+    }
+    if (product.status !== "Processing") {
+        throw new Error("Purchase can only be cancelled if status is Processing");
     }
 
     product.status = "Active";
     delete product.kupacId;
+    productRepository.updateProduct(productId, product);
 
-    products[index] = product;
-    writeProducts(products); 
+    try {
+        cartItemService.deleteByProductId(productId);
+    } catch (error) {
+        console.error(`!!! Error deleting item from product cart ${productId}: ${error.message}`);
+    }
 
     return product;
   },
+
+  getSoldProductsBySeller: (sellerId) => {
+    const allProducts = productRepository.getAllProducts();
+    const soldBySeller = allProducts.filter(p => String(p.prodavacId) === String(sellerId) && p.status === 'Sold');
+
+    const populatedProducts = soldBySeller.map(product => {
+      if (product.kupacId) {
+        const buyer = userRepository.findById(product.kupacId);
+        return {
+          ...product,
+          kupacKorisnickoIme: buyer ? buyer.korisnickoIme : 'Unknown'
+        };
+      }
+      return product;
+    });
+
+    return populatedProducts;
+  }
 };

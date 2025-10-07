@@ -34,17 +34,14 @@ export const updateSensitive = async (req, res) => {
 };
 
 export const getPublicProfileById = (req, res) => {
-    console.log(`--- Primljen zahtjev za javni profil ---`);
-    console.log(`Traženi userId: ${req.params.userId}`);
     try {
         const { userId } = req.params;
-        const publicProfile = userService.getPublicProfile(userId);
-
-         console.log(`✅ Uspješno pronađen profil, šaljem podatke.`);
+        const viewerId = req.user ? req.user.id : null; 
+        
+        const publicProfile = userService.getPublicProfile(userId, viewerId);
 
         res.json(publicProfile);
     } catch (error) {
-        console.error(`!!! Greška prilikom dohvaćanja javnog profila: ${error.message}`);
         res.status(404).json({ message: error.message });
     }
 };

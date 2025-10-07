@@ -63,5 +63,14 @@
     "reportedId": "1759768583596",
     "datum": "2025-10-06T16:42:27.869Z",
     "status": "Prihvaćena"
+  },
+  {
+    "id": "5a1be0d6-d52f-4c97-8d57-49372627df20",
+    "razlog": "Buyer failed to complete the payment after confirming the order.",
+    "productId": "1759432241724",
+    "reporterId": "1758660875117",
+    "reportedId": "1758674485205",
+    "datum": "2025-10-07T01:50:24.590Z",
+    "status": "Podneta"
   }
 ]

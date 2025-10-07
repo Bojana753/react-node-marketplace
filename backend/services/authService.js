@@ -1,6 +1,10 @@
+
 import * as userRepository from '../repositories/userRepository.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import CartService from './cartService.js'; 
+
+const cartService = new CartService();
 
 export const register = async (userData) => {
   const { korisnickoIme, email, lozinka } = userData;
@@ -10,23 +14,23 @@ export const register = async (userData) => {
     userRepository.findByEmail(email);
 
   if (existingUser) {
-    throw new Error('Korisničko ime ili email već postoje.');
+    throw new Error('Username or email already exists.');
   }
 
- const hashedPassword = await bcrypt.hash(lozinka, 10);
+  const hashedPassword = await bcrypt.hash(lozinka, 10);
 
   const newUser = {
     id: Date.now().toString(),
     ...userData,
     lozinka: hashedPassword,
-
     proizvodiNaProdaju: [],
     kupljeniProizvodi: []
   };
   
+  cartService.getOrCreateCart(newUser.id);
+  
   return userRepository.save(newUser);
 };
-
 
 export const login = async (loginData) => {
   const { korisnickoIme, lozinka } = loginData;
@@ -44,6 +48,8 @@ export const login = async (loginData) => {
   if (!isMatch) {
     throw new Error('Incorrect username or password.');
   }
+
+ const userCart = cartService.getOrCreateCart(user.id);
 
   const payload = {
     id: user.id,
@@ -65,6 +71,7 @@ export const login = async (loginData) => {
       email: user.email,
       uloga: user.uloga,
       telefon: user.telefon || null,
+      cartId: userCart.id, 
     },
   };
 };

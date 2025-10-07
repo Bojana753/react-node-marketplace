@@ -37,7 +37,6 @@ async function updateSensitiveInfo(data, token) {
     return res.json();
 }
 
-// --- Glavna Komponenta ---
 export default function ProfilePage() {
     const { user } = useAuth();
     const [profile, setProfile] = useState(null);
@@ -132,41 +131,39 @@ export default function ProfilePage() {
                 {success && <div className="alert alert-success" role="alert">{success}</div>}
 
                 <div className="row">
-                    {/* Kartica za osnovne podatke */}
                     <div className="col-lg-6 mb-4">
                         <div className="profile-card h-100">
                             <h2>Basic Information</h2>
                             <form onSubmit={handleBasicSubmit}>
                                 <div className="mb-3">
                                     <label className="form-label">First Name</label>
-                                    <input type="text" name="ime" value={basicInfo.ime} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="name" value={basicInfo.ime} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Last Name</label>
-                                    <input type="text" name="prezime" value={basicInfo.prezime} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="surname" value={basicInfo.prezime} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Phone</label>
-                                    <input type="text" name="telefon" value={basicInfo.telefon} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="telephone" value={basicInfo.telefon} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Date of Birth</label>
-                                    <input type="date" name="datumRodjenja" value={basicInfo.datumRodjenja} onChange={handleBasicChange} className="form-control" />
+                                    <input type="date" name="dateOfBirth" value={basicInfo.datumRodjenja} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
-                                    <textarea name="opis" value={basicInfo.opis} onChange={handleBasicChange} className="form-control" rows="3"></textarea>
+                                    <textarea name="description" value={basicInfo.opis} onChange={handleBasicChange} className="form-control" rows="3"></textarea>
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Profile Picture URL</label>
-                                    <input type="text" name="profilnaSlika" value={basicInfo.profilnaSlika} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="profilepicture" value={basicInfo.profilnaSlika} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <button type="submit" className="btn btn-primary">Save Basic Info</button>
                             </form>
                         </div>
                     </div>
 
-                    {/* Kartica za osjetljive podatke */}
                     <div className="col-lg-6 mb-4">
                         <div className="profile-card h-100">
                             <h2>Sensitive Data</h2>

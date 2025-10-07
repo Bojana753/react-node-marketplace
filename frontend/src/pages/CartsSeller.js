@@ -100,7 +100,6 @@ const CartSeller = () => {
         <thead>
           <tr>
             <th>Product</th>
-            {/* <th>Cart ID</th> */}
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -109,7 +108,6 @@ const CartSeller = () => {
           {cartItems.map(item => (
             <tr key={item.id}>
               <td>{item.productName}</td>
-              {/* <td>{item.cartId}</td> */}
               <td>{item.status}</td>
               <td>
                 <button onClick={() => approve(item)}>Approve</button>

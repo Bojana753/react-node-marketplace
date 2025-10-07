@@ -32,7 +32,7 @@ export const reject = (req, res) => {
     try {
         const { reason } = req.body;
         if (!reason || reason.trim() === '') {
-            throw new Error("Razlog odbijanja je obavezan.");
+            throw new Error("The reason for rejection is mandatory.");
         }
         const updatedReport = reportService.rejectReport(req.params.id, reason);
         res.json(updatedReport);

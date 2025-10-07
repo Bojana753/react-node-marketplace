@@ -43,12 +43,10 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     
-    // State za modal odbijanja prijave
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
     const [selectedReport, setSelectedReport] = useState(null);
     const [rejectionReason, setRejectionReason] = useState('');
 
-    // State za modal izmjene recenzije
     const [isEditReviewModalOpen, setIsEditReviewModalOpen] = useState(false);
     const [selectedReviewForEdit, setSelectedReviewForEdit] = useState(null);
     const [newCommentText, setNewCommentText] = useState('');
@@ -168,9 +166,9 @@ export default function AdminDashboard() {
                                             <td>{report.reporterUsername}</td>
                                             <td>{report.reportedUsername}</td>
                                             <td>{report.razlog}</td>
-                                            <td><span className={`badge ${report.status === 'Podneta' ? 'bg-warning' : (report.status === 'Prihvaćena' ? 'bg-success' : 'bg-secondary')}`}>{report.status}</span></td>
+                                            <td><span className={`badge ${report.status === 'Filed' ? 'bg-warning' : (report.status === 'Accepted' ? 'bg-success' : 'bg-secondary')}`}>{report.status}</span></td>
                                             <td>
-                                                {report.status === 'Podneta' && (
+                                                {report.status === 'Filed' && (
                                                     <>
                                                         <button className="btn btn-sm btn-success me-2" onClick={() => handleAccept(report.id)}>Accept</button>
                                                         <button className="btn btn-sm btn-danger" onClick={() => openRejectModal(report)}>Reject</button>

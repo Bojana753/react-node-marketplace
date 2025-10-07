@@ -1,17 +1,17 @@
-// src/pages/ProductTabs.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllProducts, deleteProduct } from "../services/productService";
-import "../css/product.css";
-import { getCartItems } from "../services/cartItemService";
+import { getAllProducts, deleteProduct, updateProductStatus } from "../services/productService";
+import { getCartItems, createCartItem } from "../services/cartItemService";
 import { useAuth } from "../context/AuthContext";
+import "../css/product.css";
+
 
 export default function ProductTabs() {
   const [tab, setTab] = useState("all");
   const [allProducts, setAllProducts] = useState([]);
   const [myProducts, setMyProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState(""); // trenutno izabrana kategorija
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [products, setProducts] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState(""); 
@@ -25,37 +25,11 @@ export default function ProductTabs() {
   const token = localStorage.getItem("token");
   const isSeller = user && user.uloga === "Prodavac";
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        setLoading(true);
-        const data = await getAllProducts();
-        const cartItems = await getCartItems();
-        const cartItemIds = new Set(cartItems.map(item => item.productId));
-        setAllProducts(data.filter(product => !cartItemIds.has(product.id)));
-
-        if (isSeller) {
-          const res = await fetch("http://localhost:5000/api/products/my", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          if (!res.ok) throw new Error("Failed to fetch my products");
-          const myData = await res.json();
-          setMyProducts(myData.filter(p => String(p.prodavacId) === String(user.id)));
-        }
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProducts();
-  }, [isSeller, token, user?.id]);
-
-  async function handleDelete(id) {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      await deleteProduct(id);
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
       const data = await getAllProducts();
-      const cartItems = await getCartItems();
+      const cartItems = user ? await getCartItems() : []; 
       const cartItemIds = new Set(cartItems.map(item => item.productId));
       setAllProducts(data.filter(product => !cartItemIds.has(product.id)));
 
@@ -63,16 +37,57 @@ export default function ProductTabs() {
         const res = await fetch("http://localhost:5000/api/products/my", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        if (!res.ok) throw new Error("Failed to fetch my products");
         const myData = await res.json();
         setMyProducts(myData.filter(p => String(p.prodavacId) === String(user.id)));
       }
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [isSeller, token, user?.id]);
+
+const handleShopNow = async (productId) => {
+    if (!user) {
+      alert("You must be logged in to buy!");
+      return;
+    }
+    if (user.uloga !== 'Kupac') {
+        alert("Only buyers can purchase products.");
+        return;
+    }
+
+    try {
+      await updateProductStatus(productId, "Processing");
+      await createCartItem({
+        cartId: user.cartId,
+        productId: productId,
+        quantity: 1,
+        status: "IN_PROGRESS"
+      });
+      alert("Product is now being processed and added to your cart!");
+      fetchProducts(); 
+    } catch (err) {
+      console.error("Purchase error:", err);
+      alert(`Error: ${err.message}`);
+    }
+  };
+
+  async function handleDelete(id) {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      await deleteProduct(id);
+      fetchProducts();
     }
   }
 
   const renderProducts = (products, showAddBtn = true, isMine = false) => {
     if (loading) return <div className="loading">Loading products...</div>;
 
-    // filtriranje po searchTerm, price, salesType, category i location
     const filteredProducts = products.filter(p => {
       const matchesSearch =
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,17 +98,15 @@ export default function ProductTabs() {
         (!priceTo || parseFloat(p.price) <= parseFloat(priceTo));
 
       const matchesSalesType = !salesType || p.salesType === salesType;
-
-const matchesCategory = !categoryFilter || String(p.categoryId) === String(categoryFilter);
-
-     const matchesLocation =
-  !locationFilter || (
-    p.location &&
-    (
-      (p.location.street && p.location.street.toLowerCase().includes(locationFilter.toLowerCase())) ||
-      (p.location.city && p.location.city.toLowerCase().includes(locationFilter.toLowerCase()))
-    )
-  );
+      const matchesCategory = !categoryFilter || String(p.categoryId) === String(categoryFilter);
+      const matchesLocation =
+        !locationFilter || (
+          p.location &&
+          (
+            (p.location.street && p.location.street.toLowerCase().includes(locationFilter.toLowerCase())) ||
+            (p.location.city && p.location.city.toLowerCase().includes(locationFilter.toLowerCase()))
+          )
+        );
 
       return matchesSearch && matchesPrice && matchesSalesType && matchesCategory && matchesLocation;
     });
@@ -133,7 +146,7 @@ const matchesCategory = !categoryFilter || String(p.categoryId) === String(categ
               ? highestBid ? "Current Bid:" : "Starting at:"
               : "Price:";
 
-          const isOwner = isSeller && String(user.id) === String(p.prodavacId);
+          const isOwner = isSeller && String(user?.id) === String(p.prodavacId);
 
           return (
             <li key={p.id} className="product-card">
@@ -150,6 +163,17 @@ const matchesCategory = !categoryFilter || String(p.categoryId) === String(categ
                 <h3>{p.name}</h3>
                 <p className="product-price">{priceLabel} ${displayPrice}</p>
               </Link>
+              
+              {user && user.uloga === "Kupac" && p.salesType === "fixedPrice" && !isOwner && !isMine && (
+                 <div className="card-actions-bottom">
+                    <button 
+                        className="btn shop-btn-small" 
+                        onClick={() => handleShopNow(p.id)}
+                    >
+                        Shop Now
+                    </button>
+                </div>
+              )}
 
               {isOwner && (
                 <div className="card-actions">
@@ -180,8 +204,6 @@ const matchesCategory = !categoryFilter || String(p.categoryId) === String(categ
       <div className="container">
         <div className="header-section">
           <h1 className="page-title">Products</h1>
-
-          {/* Polja za filtere */}
           <input
             type="text"
             placeholder="Search products by name or description..."

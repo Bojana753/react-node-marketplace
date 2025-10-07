@@ -34,5 +34,41 @@
     "authorId": "1759754539826",
     "receiverId": "1758225075304",
     "datum": "2025-10-06T18:34:41.885Z"
+  },
+  {
+    "id": "58cda231-5823-485e-8dfd-e56e7ab2d75c",
+    "ocjena": 5,
+    "komentar": "Great buyer! Fast payment and very easy to communicate with.",
+    "productId": "1759432241724",
+    "authorId": "1758660875117",
+    "receiverId": "1758674485205",
+    "datum": "2025-10-07T01:10:45.451Z"
+  },
+  {
+    "id": "6a524303-55f9-459c-bd95-7fb023089a3a",
+    "ocjena": 5,
+    "komentar": "Very reliable and professional seller. Item arrived quickly and in perfect condition.",
+    "productId": "1759802733835",
+    "authorId": "1758674485205",
+    "receiverId": "1758660875117",
+    "datum": "2025-10-07T02:45:31.337Z"
+  },
+  {
+    "id": "63998cfc-c96d-4ef9-8c65-43ee965aae1b",
+    "ocjena": 3,
+    "komentar": "Item exceeded expectations. Thank you for a flawless experience!",
+    "productId": "1759805322351",
+    "authorId": "1758674485205",
+    "receiverId": "1758660875117",
+    "datum": "2025-10-07T02:51:39.477Z"
+  },
+  {
+    "id": "9cdec317-2d92-4ed8-ad30-463991992a72",
+    "ocjena": 1,
+    "komentar": "Unfortunately, my experience with this seller was disappointing. Communication was slow and unclear, and the item arrived later than promised. The product did not match the description, and resolving the issue was difficult. I would not recommend this seller based on this transaction.",
+    "productId": "1759805357091",
+    "authorId": "1759418946844",
+    "receiverId": "1758660875117",
+    "datum": "2025-10-07T02:53:40.581Z"
   }
 ]

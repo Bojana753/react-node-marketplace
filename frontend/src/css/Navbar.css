@@ -17,7 +17,7 @@ padding: 0;
 }
 .icon-btn svg {
 fill: none;
-stroke: white;
+stroke: rgb(156, 11, 139);
 stroke-width: 2;
 }
 .user-menu-wrapper {

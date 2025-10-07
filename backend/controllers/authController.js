@@ -3,7 +3,7 @@ import * as authService from '../services/authService.js';
 export const register = async (req, res) => {
   try {
     const user = await authService.register(req.body);
-    res.status(201).json({ message: "Korisnik uspešno registrovan", userId: user.id });
+    res.status(201).json({ message: "User successfully registered", userId: user.id });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

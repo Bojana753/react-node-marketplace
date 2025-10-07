@@ -18,9 +18,9 @@ export default {
 
   create: (req, res) => {   
     try {
-      console.log("📥 Received cart:", req.body);
+      console.log(" Received cart:", req.body);
       const newCart = cartService.create(req.body);
-      console.log("💾 Saved cart:", newCart);
+      console.log(" Saved cart:", newCart);
       res.status(201).json(newCart);
     } catch (err) {
       res.status(400).json({ error: err.message });

@@ -1,22 +1,24 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getMyPurchases } from '../services/productService'; 
+import { getMyPurchases, cancelPurchase } from '../services/productService'; 
+import { useNavigate } from 'react-router-dom';
 import '../css/ReviewModal.css'; 
 import '../css/MyPurchases.css';
 
 async function postReviewAPI(reviewData, token) {
-    const res = await fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(reviewData) });
+    const res = await fetch('http://localhost:5000/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(reviewData) });
     if (!res.ok) { const errData = await res.json(); throw new Error(errData.message || "Failed to post review."); }
     return res.json();
 }
 
 async function postReportAPI(reportData, token) {
-    const res = await fetch('/api/reports', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(reportData) });
+    const res = await fetch('http://localhost:5000/api/reports', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(reportData) });
     if (!res.ok) { const errData = await res.json(); throw new Error(errData.message || "Failed to post report."); }
     return res.json();
 }
 
 export default function MyPurchases() {
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -34,13 +36,13 @@ export default function MyPurchases() {
     const loadPurchases = useCallback(async () => {
         if (!user) return;
         setLoading(true);
-        setError(''); // Resetiraj grešku na početku
+        setError('');
         try {
-            const mySoldProducts = await getMyPurchases();  
-            setPurchases(mySoldProducts);
+            const myPurchaseData = await getMyPurchases();  
+            setPurchases(myPurchaseData);
         } catch (error) { 
-            console.error("DETALJNA GREŠKA PRI UČITAVANJU KUPOVINA:", error); // Detaljniji log
-        setError(error.message); // Postavi točnu poruku o grešci
+            console.error("DETALJNA GREŠKA PRI UČITAVANJU KUPOVINA:", error);
+            setError(error.message);
         } finally { 
             setLoading(false); 
         }
@@ -110,6 +112,22 @@ export default function MyPurchases() {
         }
     };
 
+    const handleCancelPurchase = async (productId) => {
+        if (!window.confirm("Are you sure you want to cancel this purchase?")) {
+            return;
+        }
+        try {
+            await cancelPurchase(productId);
+            alert("Purchase has been successfully canceled!");
+            
+            navigate('/products');
+            
+        } catch (err) {
+            console.error("Error canceling purchase:", err);
+            alert(`Error: ${err.message}`);
+        }
+    };
+
     if (loading) return <h2>Loading...</h2>;
 
     return (
@@ -130,18 +148,31 @@ export default function MyPurchases() {
                                     <span>Final Price: <strong>${product.finalnaCena || product.price}</strong></span>
                                 </div>
                                 <div className="purchase-actions">
-                                    <button 
-                                        className="btn btn-primary" 
-                                        onClick={() => openReviewModal(product)}
-                                    >
-                                        Rate Seller
-                                    </button>
-                                    <button 
-                                        className="btn btn-outline-danger" 
-                                        onClick={() => openReportModal(product)}
-                                    >
-                                        Report Seller
-                                    </button>
+                                    {product.status === 'Sold' && (
+                                        <>
+                                            <button 
+                                                className="btn btn-primary" 
+                                                onClick={() => openReviewModal(product)}
+                                            >
+                                                Rate Seller
+                                            </button>
+                                            <button 
+                                                className="btn btn-outline-danger" 
+                                                onClick={() => openReportModal(product)}
+                                            >
+                                                Report Seller
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {product.status === 'Processing' && (
+                                        <button 
+                                            className="btn btn-warning"
+                                            onClick={() => handleCancelPurchase(product.id)}
+                                        >
+                                            Cancel Purchase
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -151,7 +182,6 @@ export default function MyPurchases() {
                 )}
             </div>
 
-            {/* Modali */}
             {isReviewModalOpen && (
                 <div className="modal-backdrop">
                     <div className="modal">

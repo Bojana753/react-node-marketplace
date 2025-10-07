@@ -62,16 +62,16 @@ export default function ProductDetails() {
       await updateProductStatus(productId, "Processing");
 
       await createCartItem({
-        cartId: user.cartId,
-        productId: productId,
-        quantity: 1,
-        status: "IN_PROGRESS"
-      });
+    cartId: user.cartId, 
+    productId: productId,
+    quantity: 1,
+    status: "IN_PROGRESS"
+});
 
       alert("Product is now being processed and added to your cart!");
       loadProduct();
     } catch (err) {
-      console.error("Greška pri kupovini:", err);
+      console.error("Purchase error:", err);
       setError("Failed to process product.");
     }
   };
@@ -87,21 +87,21 @@ export default function ProductDetails() {
       alert("Purchase has been canceled!");
       loadProduct();
     } catch (err) {
-      console.error("Greška pri otkazivanju:", err);
+      console.error("Cancellation error:", err);
       setError("Failed to cancel purchase.");
     }
   };
   const handleEndAuction = async (productId) => {
  
-    if (!window.confirm("Da li ste sigurni da želite završiti aukciju? Pobjednik će biti korisnik s najvišom ponudom.")) {
+    if (!window.confirm("Are you sure you want to end the auction? The winner will be the user with the highest bid.")) {
       return;
     }
     try {
       await endAuction(productId);
-      alert("Aukcija je uspješno završena!");
+      alert("The auction was successfully completed!");
       loadProduct(); 
     } catch (err) {
-      console.error("Greška pri završavanju aukcije:", err);
+      console.error("Error ending auction:", err);
       setError(err.message || "Failed to end the auction."); 
     }
   };

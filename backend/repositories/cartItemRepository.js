@@ -45,4 +45,8 @@ export default class CartItemRepository {
     items = items.filter(item => item.id !== id);
     this._saveItems(items);
   }
+
+ saveAll(items) {
+    this._saveItems(items);
+  }
 }

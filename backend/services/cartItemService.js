@@ -49,4 +49,20 @@ export default class CartItemService {
   removeItem(itemId) {
     this.cartItemRepository.delete(itemId);
   }
+
+  deleteByProductId(productId) {
+    let allItems = this.cartItemRepository.getAll();
+    const initialLength = allItems.length;
+
+    const remainingItems = allItems.filter(item => String(item.productId) !== String(productId));
+
+    if (remainingItems.length < initialLength) {
+       this.cartItemRepository.saveAll(remainingItems);
+      console.log(`Successfully deleted cart item(s) for product ID: ${productId}`);
+      return true;
+    }
+
+    console.warn(`No cart item found to delete for product ID: ${productId}`);
+    return false;
+  }
 }
