@@ -70,5 +70,32 @@
     "authorId": "1759418946844",
     "receiverId": "1758660875117",
     "datum": "2025-10-07T02:53:40.581Z"
+  },
+  {
+    "id": "6850dd44-273c-45bd-a43f-dd4483acd119",
+    "ocjena": 5,
+    "komentar": "good guy",
+    "productId": "1759802733835",
+    "authorId": "1758660875117",
+    "receiverId": "1758674485205",
+    "datum": "2025-10-07T07:31:10.045Z"
+  },
+  {
+    "id": "151763ba-232c-467d-b11b-9eed6a52cf8f",
+    "ocjena": 5,
+    "komentar": "Pleasure to deal with! Clear communication and immediate payment. A+ buyer",
+    "productId": "1759448947077",
+    "authorId": "1758660875117",
+    "receiverId": "1758674485205",
+    "datum": "2025-10-07T07:40:09.133Z"
+  },
+  {
+    "id": "dc66079d-bd1d-43e1-8efb-d8b01f6484cb",
+    "ocjena": 5,
+    "komentar": "Fast shipping, excellent communication, and product exactly as described. Highly recommend!",
+    "productId": "1759448947077",
+    "authorId": "1758674485205",
+    "receiverId": "1758660875117",
+    "datum": "2025-10-07T07:50:45.685Z"
   }
 ]

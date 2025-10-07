@@ -72,5 +72,14 @@
     "reportedId": "1758674485205",
     "datum": "2025-10-07T01:50:24.590Z",
     "status": "Podneta"
+  },
+  {
+    "id": "4089ec70-6ddf-409a-9449-2ff394e3522e",
+    "razlog": "I want to report a buyer for not responding after purchase. Please assist.",
+    "productId": "1759448947077",
+    "reporterId": "1758660875117",
+    "reportedId": "1758674485205",
+    "datum": "2025-10-07T07:43:22.609Z",
+    "status": "Podneta"
   }
 ]

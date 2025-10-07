@@ -120,7 +120,10 @@
     "email": "kupac123@gmail.com",
     "telefon": "57565756",
     "lozinka": "$2b$10$htOk9bzGQJzLXobSbqpzs.Cn1J/.2b5BW2XknFDYhJHYz/v81Q1Mu",
-    "uloga": "Kupac"
+    "uloga": "Kupac",
+    "datumRodjenja": "",
+    "opis": "",
+    "profilnaSlika": ""
   },
   {
     "id": "1759195790208",
@@ -261,5 +264,20 @@
     "uloga": "Kupac",
     "proizvodiNaProdaju": [],
     "kupljeniProizvodi": []
+  },
+  {
+    "id": "1759815441157",
+    "ime": "kupac123456",
+    "prezime": "kupac12345",
+    "korisnickoIme": "kupac123456",
+    "email": "kupac12345@gmail.com",
+    "telefon": "kupac12345",
+    "lozinka": "$2b$10$a2.2JSzFNQ4r1KsiqbqXHOIDYo/hpFyIgGecwVEER9tzsKSDVqE2G",
+    "uloga": "Kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": [],
+    "datumRodjenja": "2025-10-16",
+    "opis": "",
+    "profilnaSlika": "https://img.freepik.com/free-photo/front-view-business-woman-suit_23-2148603018.jpg?semt=ais_hybrid&w=740&q=80"
   }
 ]

@@ -117,3 +117,23 @@ export async function getProductsForApproval(token = getToken()) {
   if (!res.ok) throw new Error("Failed to fetch products for approval");
   return res.json();
 }
+
+export async function getAllCategories() {
+  const res = await fetch(`http://localhost:5000/api/categories`);
+  if (!res.ok) throw new Error("Failed to fetch categories");
+  return res.json();
+}
+
+export async function createCategory(categoryName, token = getToken()) {
+  const res = await fetch(`http://localhost:5000/api/categories`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    },
+    body: JSON.stringify({ name: categoryName })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to create category");
+  return data;
+}

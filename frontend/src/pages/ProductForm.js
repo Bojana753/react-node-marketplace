@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProduct, createProduct, updateProduct } from "../services/productService";
+import { getProduct, createProduct, updateProduct, getAllCategories, createCategory } from "../services/productService";
 import { useAuth } from "../context/AuthContext";
+import "../css/Form.css";
 
 export default function ProductForm() {
   const { user, token } = useAuth();
@@ -24,11 +25,24 @@ export default function ProductForm() {
       latitude: "",
       longitude: "",
     },
-    status: "Processing",
+    status: "Active",
     reviewByBuyer: false,
     reviewBySeller: false,
     ponude: [],
   });
+
+  const [categories, setCategories] = useState([]);
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    document.body.style.backgroundImage = "url('/background.jpg')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.minHeight = "100vh";
+  }, []);
 
   useEffect(() => {
     if ((!user || user.uloga !== "Prodavac") && !alerted.current) {
@@ -39,41 +53,38 @@ export default function ProductForm() {
   }, [user, navigate]);
 
   useEffect(() => {
-    async function loadProduct() {
+    async function loadInitialData() {
       try {
-        const product = await getProduct(id);
-        setFormData({
-          ...formData,
-          name: product.name,
-          description: product.description || "",
-          price: product.price,
-          image: product.image || "",
-          salesType: product.salesType || "fixedPrice",
-          categoryId: product.categoryId || "",
-          location: product.location || {
-            street: "",
-            number: "",
-            city: "",
-            postalCode: "",
-            latitude: "",
-            longitude: "",
-          },
-          status: product.status || "Processing",
-          reviewByBuyer: product.reviewByBuyer || false,
-          reviewBySeller: product.reviewBySeller || false,
-          ponude: product.ponude || [],
-        });
+        const cats = await getAllCategories();
+        setCategories(cats);
+
+        if (id) {
+          const product = await getProduct(id);
+          setFormData({
+            ...formData,
+            name: product.name,
+            description: product.description || "",
+            price: product.price,
+            image: product.image || "",
+            salesType: product.salesType || "fixedPrice",
+            categoryId: product.categoryId || "",
+            location: product.location || { street: "", number: "", city: "", postalCode: "" },
+            status: product.status || "Active",
+            reviewByBuyer: product.reviewByBuyer || false,
+            reviewBySeller: product.reviewBySeller || false,
+            ponude: product.ponude || [],
+          });
+        }
       } catch (err) {
-        console.error("Error loading product", err);
+        console.error("Error loading initial data", err);
+        setError("Failed to load initial data for the form.");
       }
     }
-
-    if (id) loadProduct();
+    loadInitialData();
   }, [id]);
 
   function handleChange(e) {
     const { name, value } = e.target;
-
     if (["street", "number", "city", "postalCode"].includes(name)) {
       setFormData({
         ...formData,
@@ -103,8 +114,26 @@ export default function ProductForm() {
     return { latitude: "", longitude: "" };
   }
 
+  const handleAddNewCategory = async () => {
+    if (newCategoryName.trim() === "") {
+      setError("Category name cannot be empty.");
+      return;
+    }
+    try {
+      const newCategory = await createCategory(newCategoryName, token);
+      setCategories([...categories, newCategory]);
+      setFormData({ ...formData, categoryId: newCategory.id });
+      setShowNewCategoryInput(false);
+      setNewCategoryName("");
+      setError("");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
 
     const coords = await fetchCoordinates(formData.location);
     const updatedForm = {
@@ -114,7 +143,7 @@ export default function ProductForm() {
         latitude: coords.latitude,
         longitude: coords.longitude,
       },
-      dateOfCreation: new Date().toISOString()
+      dateOfCreation: id ? formData.dateOfCreation : new Date().toISOString()
     };
 
     try {
@@ -126,13 +155,22 @@ export default function ProductForm() {
       navigate("/products");
     } catch (err) {
       console.error("Error saving product", err);
-      alert("Something went wrong while storing the product.");
+      setError(err.message || "Something went wrong while storing the product.");
     }
   }
 
   return (
-    <div className="form-container">
+    <div 
+      className="form-container"
+      style={{
+        backgroundColor: "rgba(255, 255, 255, 0.85)", // blago providna
+        padding: "35px 40px",
+        borderRadius: "12px",
+        boxShadow: "0 8px 30px rgba(0,0,0,0.07)",
+      }}
+    >
       <h2>{id ? "Edit Product" : "Add Product"}</h2>
+      {error && <p style={{color: 'red', marginBottom: '15px'}}>{error}</p>}
       <form onSubmit={handleSubmit} className="product-form">
         <label>
           Name:
@@ -166,14 +204,31 @@ export default function ProductForm() {
           Category:
           <select name="categoryId" value={formData.categoryId} onChange={handleChange} required>
             <option value="">Select Category</option>
-            <option value="1">Electronics</option>
-            <option value="2">Clothing</option>
-            <option value="3">Furniture</option>
-            <option value="4">Shoes</option>
+            {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+            ))}
           </select>
         </label>
 
-        <fieldset>
+        {!showNewCategoryInput ? (
+            <button type="button" onClick={() => setShowNewCategoryInput(true)} className="btn-secondary" style={{ marginTop: '10px', width: 'fit-content' }}>
+                + Add New Category
+            </button>
+        ) : (
+            <div style={{ marginTop: '15px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <input 
+                    type="text"
+                    placeholder="Enter new category name"
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                    style={{ flexGrow: 1 }}
+                />
+                <button type="button" onClick={handleAddNewCategory} className="btn-success">Save</button>
+                <button type="button" onClick={() => setShowNewCategoryInput(false)} className="btn-danger">Cancel</button>
+            </div>
+        )}
+
+        <fieldset style={{marginTop: '20px'}}>
           <legend>Location</legend>
           <label>
             Street:
@@ -193,7 +248,7 @@ export default function ProductForm() {
           </label>
         </fieldset>
 
-        <button type="submit" className="btn">
+        <button type="submit" className="btn" style={{ marginTop: '20px', width: '100%' }}>
           {id ? "Update" : "Create"}
         </button>
       </form>

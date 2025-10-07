@@ -93,6 +93,11 @@
         "cena": 9000,
         "kupacId": "1758282466938",
         "datum": "2025-09-20T07:58:59.650Z"
+      },
+      {
+        "cena": 9007,
+        "kupacId": "1758674485205",
+        "datum": "2025-10-07T06:36:06.308Z"
       }
     ],
     "kupacId": "1759218499184",
@@ -512,8 +517,8 @@
   {
     "name": "Dyson Supersonic hair dryer",
     "description": "Dyson Supersonic Hair Dryer – Speed. Precision. Hair Care.\nThis innovative hair dryer combines a powerful digital motor with intelligent heat control to protect hair from damage. Designed for fast drying and perfect styling, the Dyson Supersonic leaves hair smooth, shiny, and healthy, while its ergonomic design ensures effortless handling. Suitable for all hair types, even the most delicate.\n\nKey Features:\n\nFast and efficient drying with the V9 digital motor\n\nReal-time heat control to prevent hair damage\n\nLightweight, balanced design for easy handling\n\nMultiple attachments for precise styling: diffuser, concentrator, volumizing nozzle\n\nQuiet operation and long-lasting durability",
-    "price": "13452",
-    "image": "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/leap-petite-global/markets/singapore/products/hair-care/supersonic/605J-IF-attachments-min.png?scl=1&fmt=png-alpha",
+    "price": "1345",
+    "image": "https://m.media-amazon.com/images/I/71q4yafwE+S._AC_SL1500_.jpg",
     "salesType": "fixedPrice",
     "categoryId": "1",
     "location": {
@@ -528,10 +533,10 @@
     "reviewByBuyer": false,
     "reviewBySeller": false,
     "ponude": [],
-    "dateOfCreation": "2025-10-02T23:49:07.065Z",
+    "dateOfCreation": "2025-10-07T06:32:35.498Z",
     "prodavacId": "1758660875117",
     "id": "1759448947077",
-    "kupacId": "1759418946844"
+    "kupacId": "1758674485205"
   },
   {
     "name": "probni",
@@ -875,5 +880,28 @@
     "prodavacId": "1758660875117",
     "id": "1759802733835",
     "kupacId": "1758674485205"
+  },
+  {
+    "name": "Summer Accessories",
+    "description": "Summer Accessories",
+    "price": "12",
+    "image": "https://images.takeshape.io/decc50a7-e43f-4c99-b5e9-cc327d2e1b93/dev/8d48816b-4bc3-409f-aa13-fb62a477b759/Amazon-Fashion-Accessories-Under-20-Summer-Affordable-Style-Looks-Expensive-Away-Lands-04.jpg",
+    "salesType": "fixedPrice",
+    "categoryId": "5",
+    "location": {
+      "street": "Reljkoviceva",
+      "number": "12",
+      "city": "Petrovaradin",
+      "postalCode": "21131",
+      "latitude": "45.2552403",
+      "longitude": "19.8751291"
+    },
+    "status": "Active",
+    "reviewByBuyer": false,
+    "reviewBySeller": false,
+    "ponude": [],
+    "dateOfCreation": "2025-10-07T07:05:49.476Z",
+    "prodavacId": "1758660875117",
+    "id": "1759820749479"
   }
 ]

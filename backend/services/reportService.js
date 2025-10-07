@@ -37,7 +37,7 @@ export const createReport = (reportData, reporterId) => {
         reporterId,
         reportedUserId, 
         new Date().toISOString(),
-        "Filed" 
+        "Podneta" 
     );
 
     return reportRepository.save(newReport);
@@ -71,7 +71,7 @@ export const acceptReport = (reportId) => {
     if (!report) {
         throw new Error("Login not found.");
     }
-    if (report.status !== 'Filed') {
+    if (report.status !== 'Podneta') {
         throw new Error("This application has already been processed.");
     }
 
@@ -99,7 +99,7 @@ export const rejectReport = (reportId, reason) => {
     if (!report) {
         throw new Error("Login not found.");
     }
-    if (report.status !== 'Filed') {
+    if (report.status !== 'Podneta') {
         throw new Error("This application has already been processed.");
     }
     

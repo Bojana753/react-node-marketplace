@@ -254,7 +254,7 @@ export default function ProductDetails() {
                     style={{ marginTop: '20px', width: '100%' }} 
                     onClick={() => handleEndAuction(product.id)}
                 >
-                    Završi Aukciju
+                    End auction
                 </button>
             );
         }

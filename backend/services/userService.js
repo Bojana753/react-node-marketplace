@@ -47,7 +47,8 @@ export const updateBasicProfile = (userId, basicData) => {
         throw new Error('User not found.');
     }
 
-    const allowedFields = ['name', 'surname', 'phone', 'date of birth', 'description', 'profile picture'];
+    const allowedFields = ['ime', 'prezime', 'telefon', 'datumRodjenja', 'opis', 'profilnaSlika'];
+    
     const dataToUpdate = {};
     for (const key of Object.keys(basicData)) {
         if (allowedFields.includes(key)) {

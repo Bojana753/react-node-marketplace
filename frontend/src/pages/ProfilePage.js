@@ -3,8 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import '../css/ProfilePage.css'; 
 
+// Funkcije za API pozive sa punim URL-om
 async function fetchProfile(token) {
-    const res = await fetch('/api/users/profile', {
+    const res = await fetch('http://localhost:5000/api/users/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!res.ok) throw new Error('Failed to fetch profile');
@@ -12,7 +13,7 @@ async function fetchProfile(token) {
 }
 
 async function updateBasicInfo(data, token) {
-    const res = await fetch('/api/users/profile/basic', {
+    const res = await fetch('http://localhost:5000/api/users/profile/basic', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(data)
@@ -25,7 +26,7 @@ async function updateBasicInfo(data, token) {
 }
 
 async function updateSensitiveInfo(data, token) {
-    const res = await fetch('/api/users/profile/sensitive', {
+    const res = await fetch('http://localhost:5000/api/users/profile/sensitive', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(data)
@@ -48,7 +49,11 @@ export default function ProfilePage() {
         ime: '', prezime: '', telefon: '', datumRodjenja: '', opis: '', profilnaSlika: ''
     });
     const [sensitiveInfo, setSensitiveInfo] = useState({
-        currentPassword: '', newUsername: '', newEmail: '', newPassword: ''
+        currentPassword: '', 
+        newUsername: '', 
+        newEmail: '', 
+        newPassword: '',
+        confirmNewPassword: ''
     });
 
     const loadProfile = useCallback(async () => {
@@ -72,7 +77,7 @@ export default function ProfilePage() {
                 opis: data.opis || '',
                 profilnaSlika: data.profilnaSlika || ''
             });
-            setSensitiveInfo({ currentPassword: '', newUsername: '', newEmail: '', newPassword: '' });
+            setSensitiveInfo({ currentPassword: '', newUsername: '', newEmail: '', newPassword: '', confirmNewPassword: '' });
         } catch (err) {
             setError(err.message);
         } finally {
@@ -102,6 +107,12 @@ export default function ProfilePage() {
     
     const handleSensitiveSubmit = async (e) => {
         e.preventDefault();
+        
+        if (sensitiveInfo.newPassword && sensitiveInfo.newPassword !== sensitiveInfo.confirmNewPassword) {
+            setError("New password and confirmation do not match.");
+            return;
+        }
+
         setError(''); setSuccess('');
         const token = localStorage.getItem('token');
         try {
@@ -137,27 +148,27 @@ export default function ProfilePage() {
                             <form onSubmit={handleBasicSubmit}>
                                 <div className="mb-3">
                                     <label className="form-label">First Name</label>
-                                    <input type="text" name="name" value={basicInfo.ime} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="ime" value={basicInfo.ime} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Last Name</label>
-                                    <input type="text" name="surname" value={basicInfo.prezime} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="prezime" value={basicInfo.prezime} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Phone</label>
-                                    <input type="text" name="telephone" value={basicInfo.telefon} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="telefon" value={basicInfo.telefon} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Date of Birth</label>
-                                    <input type="date" name="dateOfBirth" value={basicInfo.datumRodjenja} onChange={handleBasicChange} className="form-control" />
+                                    <input type="date" name="datumRodjenja" value={basicInfo.datumRodjenja} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Description</label>
-                                    <textarea name="description" value={basicInfo.opis} onChange={handleBasicChange} className="form-control" rows="3"></textarea>
+                                    <textarea name="opis" value={basicInfo.opis} onChange={handleBasicChange} className="form-control" rows="3"></textarea>
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Profile Picture URL</label>
-                                    <input type="text" name="profilepicture" value={basicInfo.profilnaSlika} onChange={handleBasicChange} className="form-control" />
+                                    <input type="text" name="profilnaSlika" value={basicInfo.profilnaSlika} onChange={handleBasicChange} className="form-control" />
                                 </div>
                                 <button type="submit" className="btn btn-primary">Save Basic Info</button>
                             </form>
@@ -185,6 +196,10 @@ export default function ProfilePage() {
                                 <div className="mb-3">
                                     <label className="form-label">New Password</label>
                                     <input type="password" name="newPassword" value={sensitiveInfo.newPassword} onChange={handleSensitiveChange} className="form-control" />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Confirm New Password</label>
+                                    <input type="password" name="confirmNewPassword" value={sensitiveInfo.confirmNewPassword} onChange={handleSensitiveChange} className="form-control" />
                                 </div>
                                 <button type="submit" className="btn btn-warning">Save Sensitive Data</button>
                             </form>
