@@ -13,7 +13,7 @@ Projekat je realizovan u okviru kursa **Veb programiranje 2024/25** na Fakultetu
 ## Tehnologije
 
 ### Frontend
-- **React 19** — korisničko sučelje
+- **React 19** — korisnički interfejs
 - **React Router DOM 7** — rutiranje
 - **jwt-decode** — dekodovanje JWT tokena na klijentskoj strani
 - **lucide-react / react-icons** — ikonice
@@ -175,4 +175,4 @@ Aplikacija se otvara na: `http://localhost:3000`
 
 ## Verzionisanje
 
-Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab](https://gitlab.com).
+Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab]([https://gitlab.com](https://gitlab.com/ftn-web-2025/student-project)).
