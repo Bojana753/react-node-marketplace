@@ -175,4 +175,4 @@ Aplikacija se otvara na: `http://localhost:3000`
 
 ## Verzionisanje
 
-Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab]([https://gitlab.com](https://gitlab.com/ftn-web-2025/student-project)).
+Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab](https://gitlab.com/ftn-web-2025/student-project).
