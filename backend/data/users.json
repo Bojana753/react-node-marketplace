@@ -194,7 +194,7 @@
     "korisnickoIme": "admin",
     "email": "admin@yahoo.com",
     "telefon": "0000000",
-    "lozinka": "$2b$10$MiwS2EcWZGMuQJuRfsU50uKSyNzMIVDo1TA8xc/bsYSIOQWZJWQaq",
+    "lozinka": "$2b$10$R.UXd0lNm4sRMcSmk0ggIeV56LJmlDHRLYREd/1/DNTfqHCtWH1dq",
     "uloga": "Administrator",
     "blokiran": false
   },
@@ -279,5 +279,17 @@
     "datumRodjenja": "2025-10-16",
     "opis": "",
     "profilnaSlika": "https://img.freepik.com/free-photo/front-view-business-woman-suit_23-2148603018.jpg?semt=ais_hybrid&w=740&q=80"
+  },
+  {
+    "id": "1778852646296",
+    "ime": "bojana",
+    "prezime": "milosevic",
+    "korisnickoIme": "bojana",
+    "email": "samozachatgpt12345678@gmail.com",
+    "telefon": "0691012233",
+    "lozinka": "$2b$10$55UQmRXc2Cw6lUNthZ7MguXHgb2PfGEIBQDZDQEtnJ/nF8lnSMB4O",
+    "uloga": "Kupac",
+    "proizvodiNaProdaju": [],
+    "kupljeniProizvodi": []
   }
 ]
