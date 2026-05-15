@@ -2,7 +2,7 @@
 
 Veb aplikacija koja korisnicima omogućava kupovinu i prodaju proizvoda putem fiksne cene ili aukcije, nalik na KupujemProdajem i Limundo.
 
-Projekat je realizovan u okviru kursa **Veb programiranje** na Fakultetu tehničkih nauka u Novom Sadu.
+Projekat je realizovan u okviru kursa **Veb programiranje 2024/25** na Fakultetu tehničkih nauka u Novom Sadu.
 
 **Članovi tima:**
 - Bojana Milošević
@@ -13,7 +13,7 @@ Projekat je realizovan u okviru kursa **Veb programiranje** na Fakultetu tehnič
 ## Tehnologije
 
 ### Frontend
-- **React 19** — korisnički interfejs
+- **React 19** — korisničko sučelje
 - **React Router DOM 7** — rutiranje
 - **jwt-decode** — dekodovanje JWT tokena na klijentskoj strani
 - **lucide-react / react-icons** — ikonice
@@ -154,6 +154,25 @@ Aplikacija se otvara na: `http://localhost:3000`
 
 ---
 
+## Screenshots
+
+### Početna stranica
+![Početna stranica](screenshots/home.png)
+
+### Lista proizvoda
+![Lista proizvoda](screenshots/products.png)
+
+### Detalji proizvoda
+![Detalji proizvoda](screenshots/product-details.png)
+
+### Admin dashboard
+![Admin dashboard](screenshots/admin-dashboard.png)
+
+### Profil korisnika
+![Profil korisnika](screenshots/profile.png)
+
+---
+
 ## Verzionisanje
 
-Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab]([https://gitlab.com](https://gitlab.com/ftn-web-2025/student-project)).
+Projekat se verzionuje pomoću **Git**-a, a repozitorijum je dostupan na [GitLab](https://gitlab.com).
